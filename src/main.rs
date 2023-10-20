@@ -72,7 +72,7 @@ fn generic_req_log(req: HttpRequest, extra: Option<String>) {
 
 #[get("/rd")]
 async fn unknown_redirect() -> impl Responder {
-    Redirect::to(RICK.clone()).permanent()
+    Redirect::to(&*RICK).permanent()
 }
 
 #[derive(Deserialize, Debug)]
