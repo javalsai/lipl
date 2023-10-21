@@ -18,16 +18,17 @@ A simple IP logger perfect for machines with low resources.
     - [Download automatic builds from releases](#download-automatic-builds-from-releases)
     - [Build Package](#build-package)
     - [Build package for other architecture](#build-package-for-other-architecture)
+- [Config](#config)
 - [Other](#other)
     - [Redirects](#redirects)
     - [HTTPS](#https)
 
 # Usage
-This will create a directory called `log` where all logged IPs and data will be registered.
 ```
 lipl [address?] [port]
  * Address is 0.0.0.0 by default
 ```
+This will create a directory called `log` where all logged IPs and data will be registered.
 
 # Installation
 ### Download automatic builds from [releases](https://github.com/DefendSec/light-ip-logger-rs/releases)
@@ -41,11 +42,11 @@ cargo build --release # Or `cargo b -r`
 This will install all necessary dependencies and place the final binary on `cargo/debug/lipl`.
 
 ### Build package for other architecture
-This can be easily done through `nix`, which will make the perfect isolated environment to produce binaries other architectures. Remember that you can use `nix` outside of NixOS.
+This can be easily done through `nix`, which will make the perfect isolated environment to produce binaries other architectures. (Remember that you can use `nix` outside of NixOS)
 
-Currently we only have a config for `armv7a-unknown-linux-gnueabihf` (ARMv7-A Hard Float, equivalent to a Raspberry Pi 2 model B), but we're planning on making a config for other machines or allow you to select your own (you can try modifying the `flake.nix` file though)
+Currently we only have a config for `armv7a-unknown-linux-gnueabihf` (ARMv7-A Hard Float, equivalent to a Raspberry Pi 2 model B), but we're planning on making a config for other machines or allow you to select your own (you can try modifying the `flake.nix` file though, the default interpreter of the machine can be a nice hint on which target to use)
 
-If you have `nix` installed you can stright up build the package, this will place the final binary on `result/bin/lipl`, but it will have an elf specific to this, so you'll need to have `patchelf` installed either on your machine or on the final machine. The overall commands are the following (run them yourself one by one and understand what you are doing)
+If you have `nix` installed you can straight up build the package, this will place the final binary on `result/bin/lipl`, but it will have an elf specific to this machine's nix, so you'll need to have `patchelf` installed either on your machine or on the final machine. The overall commands are the following (run them yourself one by one and understand what you are doing)
 
 ```bash
 nix build # Will take a while
@@ -53,19 +54,30 @@ nix build # Will take a while
 cp result/bin/lipl ./lipl
 chmod 775 lipl
 
-# Get the default interpreter for the final machine, in my case it's /lib/ld-linux.so.3 (a symlink to /lib/ld-linux-armhf.so.3), replace it with the one in your case
+# Get the default interpreter for the final machine
+# In my case it's /lib/ld-linux.so.3 (-> /lib/ld-linux-armhf.so.3)
+# Replace it with the one of your case
 patchelf --remove-rpath --set-interpreter /lib/ld-linux.so.3 lipl
 
-# If you have qemu on your machine you can optionally test it by using (in this case ARM Arch and 8080 as port)
+# If you have qemu on your machine you can optionally test it
+# Just run this (in this case ARM architecture and 8080 as port)
 qemu-arm lipl 8080
+```
+
+# Config
+This is not yet supported, but it will just be a `toml` file that will allow you to edit log paths, redirect behavior, default response...
+```toml
+# Default TOML
+[nothing]
+somthing = false
 ```
 
 # Other
 
 ### Redirects
-This is a special route that will put the user through a page that will run JS (obfuscated) to grab things like screen size, clipboard<sup>`*`</sup> and geolocation<sup>`*`</sup>.
+This is a special route that will put the user through a page that will run JS (obfuscated) to grab things like screen size, clipboard<sup>\*</sup> and geolocation<sup>\*</sup>.
 
-<sup>`*`</sup> Permission must be enabled in browser
+<sup>\*</sup> Permission must be enabled in browser
 
 If JS is not enabled it will quickly refresh page and perform the redirect server-side.
 
@@ -110,3 +122,5 @@ server {
 }
 ```
 Then just `systemctl enable --now nginx`, `crontab -e` and add `@reboot cd /home/<username>/tmp/lipl && ./lipl 8080` (I have binary under `~/tmp/lipl/lipl` because I wanna make it a service or separate it from my user). But you can do it your own way.
+
+(I learned all this in 30 min thanks to chatGPT)
