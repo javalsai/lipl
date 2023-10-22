@@ -9,19 +9,20 @@
     nixpkgs,
     rust-overlay,
   }: let
+    specialArgs = import ./config.nix;
     system = "x86_64-linux";
     overlays = [(import rust-overlay)];
     pkgs = import nixpkgs {
       inherit overlays system;
       crossSystem = {
-        config = "armv7a-unknown-linux-gnueabihf";
-        rustc.config = "armv7-unknown-linux-gnueabihf";
+        config = specialArgs.targets.nix;
+        rustc.self.config = specialArgs.targets.rust;
       };
     };
   in {
     packages.${system} = {
-      default = self.outputs.packages.${system}.armv7a-linux-buildhf;
-      armv7a-linux-buildhf = pkgs.callPackage ./. {};
+      default = self.outputs.packages.${system}.${specialArgs.targets.nix};
+      ${specialArgs.targets.nix} = pkgs.callPackage ./. {};
     };
   };
 }
