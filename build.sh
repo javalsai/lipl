@@ -65,7 +65,7 @@ run() {
     $@
 }
 
-for program in cargo nix git; do
+for program in nix git; do
     command -v "$program" &> /dev/null || {
         printf "\e[1;31m%s\e[0m\n" "Command '$program' not found. ABORTING" >&2
         exit 1
