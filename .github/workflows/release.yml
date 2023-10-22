@@ -24,7 +24,7 @@ jobs:
           nix_path: nixpkgs=channel:nixos-unstable
 
       - name: Compile for ${{ matrix.target }}
-        run: ./build.sh ${{ matrix.target }}
+        run: chmod +x build.sh && ./build.sh ${{ matrix.target }}
 
       - uses: svenstaro/upload-release-action@v2
         with:
