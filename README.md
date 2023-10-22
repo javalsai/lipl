@@ -54,7 +54,7 @@ Currently we "only" have a config for:
 * `armv7a`
 * `armv7a-hf`: Perfect for a `Raspberry Pi 2 B`
 
-`*` If you manage to make another architecture to work just [open an issue](https://github.com/DefendSec/light-ip-logger-rs/issues/new).
+`*` If you manage to make another architecture to work just [open an issue](https://github.com/DefendSec/light-ip-logger-rs/issues/new?assignees=&labels=architecture%2C+enhancement&projects=&template=%F0%9F%94%B2-architecture-request.md&title=architecture+request%3A+%5BARCHITECTURE_NAME%5D).
 
 To compile for any of these architectures run the script `./build.sh` on the root of the project with the architecture as argument, it will check for everything and guide you through. You can obtain some more info about this by reading it.
 
