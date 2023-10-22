@@ -20,7 +20,7 @@ NIX_CONF="config.nix"
 TEMPL_PROG="\e[0;33m%s \e[1;35m%s\e[0m\n"
 TEMPL_DONE="\e[1;32m%s \e[1;35m%s\e[0m\n\n"
 main() {
-    trap "run git restore --staged '$NIX_CONF'" EXIT
+    trap "run git restore --staged '$NIX_CONF' || :" EXIT
 
     IFS=' ' read -r nix rust <<< "${options["$1"]}";
     # printf "Building for targets:\n nix: '%s'\n rust: '%s'\n\n" $nix $rust
