@@ -32,7 +32,8 @@ This will create a directory called `log` where all logged IPs and data will be 
 
 # Installation
 ### Download automatic builds from [releases](https://github.com/DefendSec/light-ip-logger-rs/releases)
-(This is yet not implemented)
+Go to the [releases page](https://github.com/DefendSec/light-ip-logger-rs/releases), grab the version that you prefer and download the binary.
+Note that you might need to tweak the elf as indicated in the build.sh file, take a look at the action output (if possible) to detect anuthing abnormal.
 
 ### Build Package for current architecture
 Follow this if you want to build for your current architecture.
