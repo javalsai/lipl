@@ -5,6 +5,10 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    ignore:
+      - dependency-name: serde
+        update-types:
+          - "version-update:semver-minor"
 
   - package-ecosystem: "github-actions"
     directory: ".github/workflows"
