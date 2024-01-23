@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 actix-web = "4.4.1"
-chrono = "0.4.31"
+chrono = "0.4.32"
 lazy_static = "1.4.0"
 serde = { version = "1.0.195", features = ["derive"] }
 urlencoding = "2.1.3"
