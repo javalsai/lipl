@@ -6,9 +6,8 @@ updates:
     schedule:
       interval: "daily"
     ignore:
-      - dependency-name: serde
-        update-types:
-          - "version-update:semver-minor"
+      - dependency-name: "*"
+        update-types: [ "version-update:semver-patch", "version-update:semver-minor" ]
 
   - package-ecosystem: "github-actions"
     directory: ".github/workflows"
